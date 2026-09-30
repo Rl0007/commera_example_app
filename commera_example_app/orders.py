@@ -14,7 +14,7 @@ def on_order_paid(sales_order: str) -> None:
 
 def before_order_cancel(sales_order: str) -> str | None:
 	user_tags = frappe.db.get_value("Sales Order", sales_order, "_user_tags") or ""
-	# Desk stores tags as one comma-separated string with a leading comma, e.g. ",Hold,VIP"
+	# Desk stores tags as one comma-separated string, with or without a leading comma
 	if HOLD_TAG in user_tags.split(","):
 		return _("This order is on hold, so it can't be cancelled.")
 	return None
