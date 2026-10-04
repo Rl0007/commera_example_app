@@ -24,15 +24,22 @@ Restart your workers afterwards so they pick up the new hooks.
 
 ## The hooks
 
-Declare them in your app's `hooks.py` as lists of dotted paths.
+Declare them in your app's `hooks.py` as lists of dotted paths. Order events go in one dict, keyed by event name:
+
+```python
+commera_events = {
+	"order_placed": ["commera_example_app.orders.on_order_placed"],
+	"order_paid": ["commera_example_app.orders.on_order_paid"],
+}
+```
 
 | Hook | When it runs | Argument | What to return |
 | --- | --- | --- | --- |
-| `commera_order_placed` | After a shopper places an order | Sales Order name | Nothing |
-| `commera_order_paid` | After an order is fully paid. For cash on delivery, only once the full amount is recorded | Sales Order name | Nothing |
+| `commera_events["order_placed"]` | After a shopper places an order | Sales Order name | Nothing |
+| `commera_events["order_paid"]` | After an order is fully paid. For cash on delivery, only once the full amount is recorded | Sales Order name | Nothing |
 | `commera_before_order_cancel` | Before a shopper's order is cancelled | Sales Order name | A translated reason to refuse, or `None` to allow |
 
-A few things to know about `commera_order_placed` and `commera_order_paid`:
+A few things to know about `order_placed` and `order_paid`:
 
 - Each runs once per order.
 - They run in a background job, after the order has been saved, so they never slow down checkout.

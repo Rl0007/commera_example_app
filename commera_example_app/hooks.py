@@ -7,6 +7,8 @@ app_license = "mit"
 
 required_apps = ["commera"]
 
-commera_order_placed = ["commera_example_app.orders.on_order_placed"]
-commera_order_paid = ["commera_example_app.orders.on_order_paid"]
+commera_events = {
+	"order_placed": ["commera_example_app.orders.on_order_placed"],
+	"order_paid": ["commera_example_app.orders.on_order_paid"],
+}
 commera_before_order_cancel = ["commera_example_app.orders.before_order_cancel"]
